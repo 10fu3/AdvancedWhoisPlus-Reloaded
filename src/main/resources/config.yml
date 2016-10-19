@@ -6,9 +6,7 @@ EnableJoinMassage: true
 # %JCountryC%を任意の場所に入れることで接続国コードを入れることができます。
 JoinMassage: "&e%Player% has joined this server! - from %JCountryC%"
 
-EnableAPIMode: false
-
 debug: false
 
 ###################
-ConfigVersion: 3
+ConfigVersion: 4
