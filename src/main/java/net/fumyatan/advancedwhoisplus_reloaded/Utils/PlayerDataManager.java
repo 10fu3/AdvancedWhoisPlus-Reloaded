@@ -35,9 +35,9 @@ public class PlayerDataManager {
 		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
 		YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
 
-		String NowIP = Bukkit.getPlayer(UUID.fromString(uuid)).getAddress().getAddress().getHostAddress();
+		String NowIP = adr_s;
 		String DataIP = pfile.getString("IP");
-		return DataIP.equals(NowIP);
+		return !NowIP.equals(DataIP);
 	}
 
 	public static boolean savePlayerData(String uuid){
@@ -59,6 +59,43 @@ public class PlayerDataManager {
 
 		Player target = Bukkit.getPlayer(UUID.fromString(uuid));
 		String IP = target.getAddress().getAddress().getHostAddress();
+
+		// ユーザーデータの書き込み
+		pfile.set("Nick", target.getDisplayName());
+		pfile.set("UUID", target.getUniqueId().toString());
+		pfile.set("IP", IP);
+		pfile.set("JoinCountry", JoinCountryGetter.JoinCountry(IP));
+		pfile.set("JoinCCode", JoinCountryGetter.JoinCountryCode(IP));
+
+		try {
+			pfile.save(data);
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			if (debug)
+				e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public static boolean savePlayerData(String adr_s, String uuid, Player target){
+		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
+		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
+		YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
+
+		if (!checkFile(uuid)){
+			try {
+				dir.mkdirs();
+				data.createNewFile();
+			} catch (IOException e) {
+				// TODO 自動生成された catch ブロック
+				if (debug)
+					e.printStackTrace();
+				return false;
+			}
+		}
+
+		String IP = adr_s;
 
 		// ユーザーデータの書き込み
 		pfile.set("Nick", target.getDisplayName());
