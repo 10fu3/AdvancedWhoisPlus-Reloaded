@@ -1,0 +1,21 @@
+name: ${project.artifactId}
+version: ${project.version}
+main: net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore
+author: fumyatan
+website: http://fumyatan.net
+
+commands:
+   whoisps:
+      description: ユーザー情報を表示します
+      usage: /<command>
+
+permissions:
+   advwhois.*:
+        description: ユーザー情報を表示します
+        children:
+            advwhois.whoisps: true
+            advwhois.joinshow: true
+            advwhois.bypass: true
+            advwhois.ipshow: true
+            advwhois.reload: true
+            advwhois.updateinfo: true
