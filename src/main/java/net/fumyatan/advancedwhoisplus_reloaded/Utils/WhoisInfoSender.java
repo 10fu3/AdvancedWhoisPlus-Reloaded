@@ -53,6 +53,8 @@ public class WhoisInfoSender {
 				sender.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + adr);
 				sender.sendMessage(ChatColor.GOLD + "ホストネーム: " + ChatColor.RESET + target.getAddress().getHostName().toString());
 				sender.sendMessage(ChatColor.GOLD + "接続国名: " + ChatColor.RESET + CountryGetManager.JoinCountry(target) + " (" + CountryGetManager.JoinCountryCode(target) + ")");
+				if (AdvancedWhoisCore.plugin.getConfig().getBoolean("AdditionalWhoisInfo"))
+					AdditionalWhoisSender.sendAddWhois(target);
 			} else {
 				UUID puuid = UUIDFetcher.getUUID(s_target);
 				if (puuid != null){

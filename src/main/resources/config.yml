@@ -1,6 +1,7 @@
 # AdvancedWhoisPlus #
 
 EnableJoinMassage: true
+AdditionalWhoisInfo: true
 
 # %Player%を任意の場所に入れることでプレイヤー名を入れることができます。
 # %JCountryC%を任意の場所に入れることで接続国コードを入れることができます。
@@ -9,4 +10,4 @@ JoinMassage: "&e%Player% has joined this server! - from %JCountryC%"
 debug: false
 
 ###################
-ConfigVersion: 4
+ConfigVersion: 5

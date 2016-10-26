@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.fumyatan</groupId>
   <artifactId>AdvancedWhoisPlus-Reloaded</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 
   <build>
     <plugins>
@@ -30,6 +30,10 @@
         <id>spigot-repo</id>
         <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
+    <repository>
+        <id>vault-repo</id>
+        <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+    </repository>
 </repositories>
 <dependencies>
     <!--Spigot API-->
@@ -44,6 +48,12 @@
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.10.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+    </dependency>
+    <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.6</version>
             <scope>provided</scope>
     </dependency>
 </dependencies>
