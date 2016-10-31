@@ -19,8 +19,8 @@ public class AdvancedWhoisCore extends JavaPlugin {
 		RegisteredServiceProvider<Economy> economyProvider = AdvancedWhoisCore.plugin.getServer().getServicesManager().getRegistration(Economy.class);
 		if (economyProvider != null) {
 			econ = economyProvider.getProvider();
-			useEcon = true;
-			return true;
+			useEcon = econ != null;
+			return econ != null;
 		}
 		useEcon = false;
         return false;
