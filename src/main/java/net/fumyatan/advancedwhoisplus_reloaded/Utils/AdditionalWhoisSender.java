@@ -12,7 +12,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class AdditionalWhoisSender {
 
-		private static JailAPI jail = null;
+	private static JailAPI jail = null;
 
 	private static String getMoney(Player target){
 		if (AdvancedWhoisCore.useEcon){
