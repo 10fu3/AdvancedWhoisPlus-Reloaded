@@ -6,24 +6,22 @@ import org.bukkit.entity.Player;
 
 import com.matejdro.bukkit.jail.JailAPI;
 
-import net.milkbowl.vault.economy.Economy;
+import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class AdditionalWhoisSender {
 
-	private static Economy econ = null;
-	private static JailAPI jail = null;
+		private static JailAPI jail = null;
 
 	private static String getMoney(Player target){
-		if (Bukkit.getPluginManager().getPlugin("Vault") == null){
-			return null;
+		if (AdvancedWhoisCore.useEcon){
+		double balamce = AdvancedWhoisCore.econ.getBalance(target.getPlayer());
+		return Double.toString(balamce);
 		} else {
-			double balamce = econ.getBalance(Bukkit.getOfflinePlayer(target.getUniqueId()));
-			return Double.toString(balamce);
+			return null;
 		}
 	}
-
 
 	private static String getPrefix(Player target){
 		if (Bukkit.getPluginManager().getPlugin("PermissionsEx") == null){

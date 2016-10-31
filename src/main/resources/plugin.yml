@@ -3,6 +3,8 @@ version: ${project.version}
 main: net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore
 author: fumyatan
 website: http://fumyatan.net
+softdepend: [Vault,PermissionsEx,Jail]
+
 
 commands:
    whoisps:

@@ -9,5 +9,6 @@ JoinMassage: "&e%Player% has joined this server! - from %JCountryC%"
 
 debug: false
 
+# ここから下の行は編集しないでください
 ###################
 ConfigVersion: 5
