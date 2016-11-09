@@ -3,7 +3,9 @@ package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
+import com.matejdro.bukkit.jail.Jail;
 import com.matejdro.bukkit.jail.JailAPI;
 
 import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
@@ -34,9 +36,11 @@ public class AdditionalWhoisSender {
 	}
 
 	private static Boolean getJail(Player target){
+		Plugin plugin = AdvancedWhoisCore.plugin.getServer().getPluginManager().getPlugin("Jail");
 		if (Bukkit.getPluginManager().getPlugin("Jail") == null){
 			return null;
 		} else {
+			jail = ((Jail) plugin).API;
 			Boolean nowJail = jail.isPlayerJailed(target.toString());
 			return nowJail;
 		}
