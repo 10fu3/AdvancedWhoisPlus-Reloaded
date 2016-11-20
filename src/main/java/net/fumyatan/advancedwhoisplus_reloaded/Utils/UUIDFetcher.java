@@ -51,7 +51,7 @@ public class UUIDFetcher {
 			UUID uuid = UUID.fromString(suuid);
 
 			return uuid;
-		} catch (StringIndexOutOfBoundsException | IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+		} catch (StringIndexOutOfBoundsException | IllegalArgumentException | ArrayIndexOutOfBoundsException | NullPointerException e){
 			if (debug == true){
 				e.printStackTrace();}
 			Bukkit.getLogger().warning("Failed to get UUID.");
