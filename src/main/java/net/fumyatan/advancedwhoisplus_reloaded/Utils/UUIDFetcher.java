@@ -47,9 +47,18 @@ public class UUIDFetcher {
 			String[] uuid_s = getAPI(pid).split(",", -1);
 			String[] uuid_st = uuid_s[0].split("\"", -1);
 
-			String suuid = UUIDdasher.dash(uuid_st[3]);
-			UUID uuid = UUID.fromString(suuid);
+			String suuid = uuid_st[3];
+			String[] raw_uuid = new String[5];
 
+			raw_uuid[0] = suuid.substring(0, 8);
+			raw_uuid[1] = suuid.substring(8, 12);
+			raw_uuid[2] = suuid.substring(12, 16);
+			raw_uuid[3] = suuid.substring(16, 20);
+			raw_uuid[4] = suuid.substring(20, 32);
+
+			suuid = raw_uuid[0] + "-" + raw_uuid[1] + "-" + raw_uuid[2] + "-" + raw_uuid[3] + "-" + raw_uuid[4];
+
+			UUID uuid = UUID.fromString(suuid);
 			return uuid;
 		} catch (StringIndexOutOfBoundsException | IllegalArgumentException | ArrayIndexOutOfBoundsException | NullPointerException e){
 			if (debug == true){
