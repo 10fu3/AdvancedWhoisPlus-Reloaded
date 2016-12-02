@@ -3,6 +3,10 @@
 EnableJoinMassage: true
 AdditionalWhoisInfo: true
 
+# プレイヤー接続時に表示される簡易Whoisのモード設定です。
+# 1でIPが、2でHostNameが、3で両方表示されます。
+SimplicityWhoisMode: 1
+
 # %Player%を任意の場所に入れることでプレイヤー名を入れることができます。
 # %JCountryC%を任意の場所に入れることで接続国コードを入れることができます。
 JoinMassage: "&e%Player% has joined this server! - from %JCountryC%"
@@ -11,4 +15,4 @@ debug: false
 
 # ここから下の行は編集しないでください
 ###################
-ConfigVersion: 5
+ConfigVersion: 6

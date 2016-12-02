@@ -2,7 +2,7 @@ name: ${project.artifactId}
 version: ${project.version}
 main: net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore
 author: fumyatan
-website: http://fumyatan.net
+website: https://fumyatan.net
 softdepend: [Vault,PermissionsEx,Jail]
 
 

@@ -51,7 +51,7 @@ public class WhoisInfoSender {
 				sender.sendMessage(ChatColor.GOLD + "Fly: " + ChatColor.RESET + target.getAllowFlight() + " (" + target.isFlying() + ")");
 				sender.sendMessage(ChatColor.GOLD + "OP: " + ChatColor.RESET + target.isOp());
 				sender.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + adr);
-				sender.sendMessage(ChatColor.GOLD + "ホストネーム: " + ChatColor.RESET + target.getAddress().getHostName().toString());
+				sender.sendMessage(ChatColor.GOLD + "ホストネーム: " + ChatColor.RESET + target.getAddress().getHostName());
 				sender.sendMessage(ChatColor.GOLD + "接続国名: " + ChatColor.RESET + CountryGetManager.JoinCountry(target) + " (" + CountryGetManager.JoinCountryCode(target) + ")");
 				if (AdvancedWhoisCore.plugin.getConfig().getBoolean("AdditionalWhoisInfo"))
 					AdditionalWhoisSender.sendAddWhois(target);
@@ -86,14 +86,22 @@ public class WhoisInfoSender {
 
 	public static void sendMinimalWhois(Player target){
 		boolean EJoinM = AdvancedWhoisCore.plugin.getConfig().getBoolean("EnableJoinMassage");
+		int wmode = AdvancedWhoisCore.plugin.getConfig().getInt("SimplicityWhoisMode");
 		if (EJoinM){
 			if (!target.hasPermission("advwhois.bypass")){
 				for(Player p : Bukkit.getServer().getOnlinePlayers()){
 					if (p.hasPermission("advwhois.joinshow")){
 						p.sendMessage("======== Whois Information ========");
 						p.sendMessage(ChatColor.GOLD + "名前: " + ChatColor.RESET + target.getName());
-						if (p.hasPermission("advancedwhoisplus.ipshow"))
-							p.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + target.getAddress().getAddress().getHostAddress());
+						if (p.hasPermission("advancedwhoisplus.ipshow")){
+							if (wmode == 1 || wmode > 3){
+								p.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + target.getAddress().getAddress().getHostAddress());
+							} else if (wmode == 2){
+								p.sendMessage(ChatColor.GOLD + "HostName: " + ChatColor.RESET + target.getAddress().getHostName());
+							} else {
+								p.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + target.getAddress().getAddress().getHostAddress() + ChatColor.GRAY + " (" + target.getAddress().getHostName() + ")");
+							}
+						}
 						p.sendMessage(ChatColor.GOLD + "接続国: " + ChatColor.RESET + CountryGetManager.JoinCountry(target) + " (" + CountryGetManager.JoinCountryCode(target) + ")");
 					}
 				}

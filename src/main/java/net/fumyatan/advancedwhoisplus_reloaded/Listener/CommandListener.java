@@ -20,8 +20,9 @@ public class CommandListener implements CommandExecutor {
 		if (args.length == 0){
 			sender.sendMessage("Unknown command. Type \"/whoisps help\" for help.");
 		} else if (args[0].equals("help")) {
-			PrefixAdder.sendMessage(sender, "/whoisps: プレイヤーの情報を表示します");
+			PrefixAdder.sendMessage(sender, "/whoisps <playerID>: プレイヤーの情報を表示します");
 			PrefixAdder.sendMessage(sender, "/whoisps checkver: プラグインに更新がないか確認します");
+			PrefixAdder.sendMessage(sender, "/whoisps reload: Configをリロードします");
 		} else if (args[0].equals("checkver")){
 			Player target = (Player) sender;
 			UpdateChecker.VersionCheck(target);
