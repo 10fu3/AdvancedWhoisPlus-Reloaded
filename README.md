@@ -41,6 +41,7 @@ AdminCmd等別管理プラグインを入れておりEssentialsが使えない�
 
 	# ここから下の行は編集しないでください
 	###################
+	ConfigVersion: 6
 
 ##LICENSE
 	Copyright 2016 fumyatan
