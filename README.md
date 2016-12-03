@@ -24,36 +24,25 @@ AdminCmd等別管理プラグインを入れておりEssentialsが使えない�
 - advwhois.updateinfo ・・・ プラグインの更新情報が表示されるようにします。
 
 ### 【Config】
-	# AdvancedWhoisPlus #
+		# AdvancedWhoisPlus #
 
-	EnableJoinMassage: true
-	AdditionalWhoisInfo: true
+		EnableJoinMassage: true
+		AdditionalWhoisInfo: true
 
-	# プレイヤー接続時に表示される簡易Whoisのモード設定です。
-	# 1でIPが、2でHostNameが、3で両方表示されます。
-	SimplicityWhoisMode: 1
+		# プレイヤー接続時に表示される簡易Whoisのモード設定です。
+		# 1でIPが、2でHostNameが、3で両方表示されます。
+		SimplicityWhoisMode: 1
 
-	# %Player%を任意の場所に入れることでプレイヤー名を入れることができます。
-	# %JCountryC%を任意の場所に入れることで接続国コードを入れることができます。
-	JoinMassage: "&e%Player% has joined this server! - from %JCountryC%"
+		# %Player%を任意の場所に入れることでプレイヤー名を入れることができます。
+		# %JCountryC%を任意の場所に入れることで接続国コードを入れることができます。
+		JoinMassage: "&e%Player% has joined this server! - from %JCountryC%"
 
-	debug: false
+		debug: false
 
-	# ここから下の行は編集しないでください
-	###################
-	ConfigVersion: 6
+		# ここから下の行は編集しないでください
+		###################
+		ConfigVersion: 6
 
 ##LICENSE
-	Copyright 2016 fumyatan
-
-	Licensed under the Apache License, Version 2.0 (the "License");
-	you may not use this file except in compliance with the License.
-	You may obtain a copy of the License at
-
-	   http://www.apache.org/licenses/LICENSE-2.0
-
-	Unless required by applicable law or agreed to in writing, software
-	distributed under the License is distributed on an "AS IS" BASIS,
-	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	See the License for the specific language governing permissions and
-	limitations under the License.
+		LICENSED BY GNU Lesser General Public License
+![GNU License Logo](https://www.gnu.org/graphics/lgplv3-147x51.png)
