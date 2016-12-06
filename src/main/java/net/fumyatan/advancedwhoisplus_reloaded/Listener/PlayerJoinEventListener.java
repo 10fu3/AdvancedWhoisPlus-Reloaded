@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
 import net.fumyatan.advancedwhoisplus_reloaded.Utils.CountryGetManager;
+import net.fumyatan.advancedwhoisplus_reloaded.Utils.DuplicatePlayerChecker;
 import net.fumyatan.advancedwhoisplus_reloaded.Utils.UpdateChecker;
 import net.fumyatan.advancedwhoisplus_reloaded.Utils.WhoisInfoSender;
 
@@ -24,5 +25,7 @@ public class PlayerJoinEventListener implements Listener {
 		}
 		WhoisInfoSender.sendMinimalWhois(e.getPlayer());
 		UpdateChecker.VersionCheck(e.getPlayer());
+		DuplicatePlayerChecker.sendDuplicateinfo(e.getPlayer().getAddress().getAddress().getHostAddress(), e.getPlayer().getName());
+		DuplicatePlayerChecker.saveAdressData(e.getPlayer().getAddress().getAddress().getHostAddress(), e.getPlayer());
 	}
 }

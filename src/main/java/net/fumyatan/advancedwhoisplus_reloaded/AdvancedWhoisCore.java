@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.fumyatan.advancedwhoisplus_reloaded.Listener.CommandListener;
 import net.fumyatan.advancedwhoisplus_reloaded.Listener.PlayerJoinEventListener;
 import net.fumyatan.advancedwhoisplus_reloaded.Tools.PrefixAdder;
+import net.fumyatan.advancedwhoisplus_reloaded.Utils.DuplicatePlayerChecker;
 import net.milkbowl.vault.economy.Economy;
 
 public class AdvancedWhoisCore extends JavaPlugin {
@@ -41,6 +42,12 @@ public class AdvancedWhoisCore extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerJoinEventListener(), this);
 		getCommand("whoisps").setExecutor(new CommandListener());
 		saveDefaultConfig();
+	}
+
+	@Override
+	public void onDisable(){
+		super .onDisable();
+		DuplicatePlayerChecker.removeData();
 	}
 
 }
