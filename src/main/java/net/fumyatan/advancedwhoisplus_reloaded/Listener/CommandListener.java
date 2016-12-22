@@ -24,8 +24,7 @@ public class CommandListener implements CommandExecutor {
 			PrefixAdder.sendMessage(sender, "/whoisps checkver: プラグインに更新がないか確認します");
 			PrefixAdder.sendMessage(sender, "/whoisps reload: Configをリロードします");
 		} else if (args[0].equals("checkver")){
-			Player target = (Player) sender;
-			UpdateChecker.VersionCheck(target);
+			UpdateChecker.VersionCheck(sender);
 		} else if (args[0].equals("reload")){
 			if(sender.hasPermission("advwhois.reload")){
 				AdvancedWhoisCore.plugin.reloadConfig();

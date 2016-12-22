@@ -1,7 +1,7 @@
 # AdvancedWhoisPlus #
 
 EnableJoinMassage: true
-AdditionalWhoisInfo: true
+AdditionalWhoisInfo: false
 
 # プレイヤー接続時に表示される簡易Whoisのモード設定です。
 # 1でIPが、2でHostNameが、3で両方表示されます。

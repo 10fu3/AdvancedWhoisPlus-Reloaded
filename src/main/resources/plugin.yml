@@ -21,3 +21,4 @@ permissions:
             advwhois.ipshow: true
             advwhois.reload: true
             advwhois.updateinfo: true
+            advwhois.showalert: true
