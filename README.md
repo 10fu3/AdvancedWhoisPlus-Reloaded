@@ -22,6 +22,7 @@ AdminCmd等別管理プラグインを入れておりEssentialsが使えない�
 - advwhois.ipshow ・・・ 簡易情報にIPを表示します。
 - advwhois.reload ・・・ リロードを許可します。
 - advwhois.updateinfo ・・・ プラグインの更新情報が表示されるようにします。
+- advwhois.showalert ・・・ プラグインからのアラートを見れるようにします。
 
 ### 【Config】
 		# AdvancedWhoisPlus #

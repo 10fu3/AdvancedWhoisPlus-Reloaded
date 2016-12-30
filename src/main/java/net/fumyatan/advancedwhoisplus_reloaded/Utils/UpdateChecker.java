@@ -25,6 +25,8 @@ import net.fumyatan.advancedwhoisplus_reloaded.Tools.PrefixAdder;
 
 public class UpdateChecker implements Listener {
 
+	static boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
+
 	private static InputStream cUpdate(){
 		HttpURLConnection conn;
 		try {
@@ -81,7 +83,7 @@ public class UpdateChecker implements Listener {
 		String config = root.getAttribute("config");
 		NodeList childred = root.getChildNodes();
 
-		if (!AdvancedWhoisCore.plugin.getDescription().getVersion().equals(version)){
+		if (deleteDot(AdvancedWhoisCore.plugin.getDescription().getVersion()) < deleteDot(version)){
 			if (target.hasPermission("advwhois.updateinfo")){
 				PrefixAdder.sendMessage(target, ChatColor.BLUE , "プラグインに更新があります");
 				target.sendMessage(ChatColor.BLUE + "バージョン: " + ChatColor.RESET + version + " (現在のバージョン: " + AdvancedWhoisCore.plugin.getDescription().getVersion() + ")");
@@ -104,7 +106,6 @@ public class UpdateChecker implements Listener {
 	}
 
 	public static void VersionCheck(CommandSender target){
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
 
 		// xml下準備
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -135,7 +136,7 @@ public class UpdateChecker implements Listener {
 		String config = root.getAttribute("config");
 		NodeList childred = root.getChildNodes();
 
-		if (!AdvancedWhoisCore.plugin.getDescription().getVersion().equals(version)){
+		if (deleteDot(AdvancedWhoisCore.plugin.getDescription().getVersion()) < deleteDot(version)){
 			if (target.hasPermission("advwhois.updateinfo")){
 				PrefixAdder.sendMessage(target, ChatColor.BLUE , "プラグインに更新があります");
 				target.sendMessage(ChatColor.BLUE + "バージョン: " + ChatColor.RESET + version + " (現在のバージョン: " + AdvancedWhoisCore.plugin.getDescription().getVersion() + ")");
@@ -155,6 +156,20 @@ public class UpdateChecker implements Listener {
 		} else {
 			PrefixAdder.sendMessage(target, ChatColor.BLUE , "プラグインは最新です");
 		}
+	}
+
+	public static int deleteDot(String vaule){
+		int i = 0;
+		if (vaule.indexOf("-") == -1){
+			i = vaule.length();
+		} else {
+			i = vaule.indexOf("-");
+		}
+
+		String ddot = vaule.substring(0, i).replace(".", "");
+		if (debug)
+			PrefixAdder.setLoggerInfo("PluginVersion: " + ddot);
+		return Integer.parseInt(ddot);
 	}
 
 }

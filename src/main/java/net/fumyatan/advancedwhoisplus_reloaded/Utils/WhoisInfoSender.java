@@ -40,12 +40,13 @@ public class WhoisInfoSender {
 
 				// 送信
 				sender.sendMessage(ChatColor.AQUA + "======== Whois Information ========");
-				sender.sendMessage(ChatColor.GOLD + "名前: " + ChatColor.RESET + target.getName() + " (" + Dname + ")");
+				sender.sendMessage(ChatColor.GOLD + "名前: " + ChatColor.RESET + target.getName());
+				sender.sendMessage(ChatColor.GOLD + "ニックネーム: " + ChatColor.RESET + Dname);
 				sender.sendMessage(ChatColor.GOLD + "UUID: " + ChatColor.RESET + target.getUniqueId());
 				sender.sendMessage(ChatColor.GOLD + "初回ログイン: " + ChatColor.RESET + timeStr);
 				sender.sendMessage(ChatColor.GOLD + "HP: " + ChatColor.RESET + health + "/" + healthall);
 				sender.sendMessage(ChatColor.GOLD + "空腹度: " + ChatColor.RESET + target.getFoodLevel() + " (" + food + ")");
-				sender.sendMessage(ChatColor.GOLD + "経験値: " + ChatColor.RESET + target.getTotalExperience() + " (" + "Level " + target.getLevel() + ")");
+				sender.sendMessage(ChatColor.GOLD + "経験値: " + ChatColor.RESET + target.getTotalExperience() + " (" + "Level: " + target.getLevel() + ")");
 				sender.sendMessage(ChatColor.GOLD + "座標: " + ChatColor.RESET + target.getLocation().getWorld().getName() + ", " + target.getLocation().getBlockX() + ", " + target.getLocation().getBlockY() + ", " + target.getLocation().getBlockZ());
 				sender.sendMessage(ChatColor.GOLD + "ゲームモード: " + ChatColor.RESET + target.getGameMode());
 				sender.sendMessage(ChatColor.GOLD + "Fly: " + ChatColor.RESET + target.getAllowFlight() + " (" + target.isFlying() + ")");
@@ -54,7 +55,7 @@ public class WhoisInfoSender {
 				sender.sendMessage(ChatColor.GOLD + "ホストネーム: " + ChatColor.RESET + target.getAddress().getHostName());
 				sender.sendMessage(ChatColor.GOLD + "接続国名: " + ChatColor.RESET + CountryGetManager.JoinCountry(target) + " (" + CountryGetManager.JoinCountryCode(target) + ")");
 				if (AdvancedWhoisCore.plugin.getConfig().getBoolean("AdditionalWhoisInfo"))
-					AdditionalWhoisSender.sendAddWhois(target);
+					AdditionalWhoisSender.sendAddWhois(sender, target);
 			} else {
 				UUID puuid = UUIDFetcher.getUUID(s_target);
 				if (puuid != null){

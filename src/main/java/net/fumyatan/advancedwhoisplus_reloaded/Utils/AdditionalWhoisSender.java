@@ -2,6 +2,7 @@ package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -46,15 +47,15 @@ public class AdditionalWhoisSender {
 		}
 	}
 
-	public static void sendAddWhois(Player target){
+	public static void sendAddWhois(CommandSender sender ,Player target){
 		String pre = ChatColor.translateAlternateColorCodes('&', getPrefix(target));
-		target.sendMessage(ChatColor.AQUA + "======== Additional Whois Information ========");
+		sender.sendMessage(ChatColor.AQUA + "======== Additional Whois Information ========");
 		if (getMoney(target) != null)
-			target.sendMessage(ChatColor.GOLD + "所持金: " + ChatColor.RESET + getMoney(target));
+			sender.sendMessage(ChatColor.GOLD + "所持金: " + ChatColor.RESET + getMoney(target));
 		if (getPrefix(target) != null)
-			target.sendMessage(ChatColor.GOLD + "権限: " + ChatColor.RESET + pre);
+			sender.sendMessage(ChatColor.GOLD + "権限: " + ChatColor.RESET + pre);
 		if (getJail(target) != null)
-			target.sendMessage(ChatColor.GOLD + "Jail: " + ChatColor.RESET + getJail(target));
+			sender.sendMessage(ChatColor.GOLD + "Jail: " + ChatColor.RESET + getJail(target));
 	}
 
 }
