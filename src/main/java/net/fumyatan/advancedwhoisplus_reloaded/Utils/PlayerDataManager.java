@@ -1,163 +1,96 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+
+import com.github.fcm_developers.playerdataapi.API.PlayerDataAPI;
 
 import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
 
 public class PlayerDataManager {
+	static boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
 
-	private static File dir = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData");
-
-	private static boolean checkFile(String uuid){
-		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-		return data.exists();
-	}
-
-	public static boolean checkNewIP(String uuid){
-		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-		YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
-
-		if (Bukkit.getPlayer(UUID.fromString(uuid)) != null){
-			String NowIP = Bukkit.getPlayer(UUID.fromString(uuid)).getAddress().getAddress().getHostAddress();
-			String DataIP = pfile.getString("IP");
+	public static boolean checkNewIP(UUID uuid){
+		if (Bukkit.getPlayer(uuid) != null){
+			String NowIP = Bukkit.getPlayer(uuid).getAddress().getAddress().getHostAddress();
+			String DataIP = PlayerDataAPI.getPlayerData(uuid, "IP");
 			return !NowIP.equals(DataIP);
 		}
 		return false;
 	}
 
-	public static boolean checkNewIPfromIP(String adr_s, String uuid){
-		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-		YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
-
+	public static boolean checkNewIP(String adr_s, UUID uuid){
 		String NowIP = adr_s;
-		String DataIP = pfile.getString("IP");
+		String DataIP = PlayerDataAPI.getPlayerData(uuid, "IP");
 		return !NowIP.equals(DataIP);
 	}
 
-	public static boolean savePlayerData(String uuid){
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
-		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-		YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
-
-		if (!checkFile(uuid)){
-			try {
-				dir.mkdirs();
-				data.createNewFile();
-			} catch (IOException e) {
-				// TODO 自動生成された catch ブロック
-				if (debug)
-					e.printStackTrace();
-				return false;
-			}
-		}
-
-		Player target = Bukkit.getPlayer(UUID.fromString(uuid));
+	public static boolean savePlayerData(UUID uuid){
+		Player target = Bukkit.getPlayer(uuid);
 		String IP = target.getAddress().getAddress().getHostAddress();
 
 		// ユーザーデータの書き込み
-		pfile.set("Nick", target.getDisplayName());
-		pfile.set("UUID", target.getUniqueId().toString());
-		pfile.set("IP", IP);
-		pfile.set("JoinCountry", JoinCountryGetter.JoinCountry(IP));
-		pfile.set("JoinCCode", JoinCountryGetter.JoinCountryCode(IP));
-
-		try {
-			pfile.save(data);
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			if (debug)
-				e.printStackTrace();
-		}
+		PlayerDataAPI.savePlayerData(uuid, "Nick", target.getDisplayName());
+		PlayerDataAPI.savePlayerData(uuid, "UUID", uuid.toString());
+		PlayerDataAPI.savePlayerData(uuid, "IP", IP);
+		PlayerDataAPI.savePlayerData(uuid, "JoinCountry", JoinCountryGetter.JoinCountry(IP));
+		PlayerDataAPI.savePlayerData(uuid, "JoinCCode", JoinCountryGetter.JoinCountryCode(IP));
 
 		return false;
 	}
 
-	public static boolean savePlayerData(String adr_s, String uuid, Player target){
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
-		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-		YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
-
-		if (!checkFile(uuid)){
-			try {
-				dir.mkdirs();
-				data.createNewFile();
-			} catch (IOException e) {
-				// TODO 自動生成された catch ブロック
-				if (debug)
-					e.printStackTrace();
-				return false;
-			}
-		}
-
+	public static boolean savePlayerData(String adr_s, UUID uuid){
+		Player target = Bukkit.getPlayer(uuid);
 		String IP = adr_s;
 
 		// ユーザーデータの書き込み
-		pfile.set("Nick", target.getDisplayName());
-		pfile.set("UUID", target.getUniqueId().toString());
-		pfile.set("IP", IP);
-		pfile.set("JoinCountry", JoinCountryGetter.JoinCountry(IP));
-		pfile.set("JoinCCode", JoinCountryGetter.JoinCountryCode(IP));
-
-		try {
-			pfile.save(data);
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			if (debug)
-				e.printStackTrace();
-		}
+		PlayerDataAPI.savePlayerData(uuid, "Nick", target.getDisplayName());
+		PlayerDataAPI.savePlayerData(uuid, "UUID", uuid.toString());
+		PlayerDataAPI.savePlayerData(uuid, "IP", IP);
+		PlayerDataAPI.savePlayerData(uuid, "JoinCountry", JoinCountryGetter.JoinCountry(IP));
+		PlayerDataAPI.savePlayerData(uuid, "JoinCCode", JoinCountryGetter.JoinCountryCode(IP));
 
 		return false;
 	}
 
-	public static String getJoinCountry(String uuid){
-
-		if (Bukkit.getPlayer(UUID.fromString(uuid)) != null){
-			if (checkFile(uuid)){
-				File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-				YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
-				return pfile.getString("JoinCountry");
+	public static String getJoinCountry(UUID uuid){
+		String data = PlayerDataAPI.getPlayerData(uuid, "JoinCountry");
+		if (Bukkit.getPlayer(uuid) != null){
+			if (data != null){
+				return data;
 			}
-			Player target = Bukkit.getPlayer(UUID.fromString(uuid));
+			Player target = Bukkit.getPlayer(uuid);
 			String adr = target.getAddress().getAddress().getHostAddress();
 
 			return JoinCountryGetter.JoinCountry(adr);
 		} else {
-			if (checkFile(uuid)){
-				File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-				YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
-				return pfile.getString("JoinCountry");
+			if (data != null){
+				return data;
 			}
-			Player target = Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getPlayer();
+			Player target = Bukkit.getOfflinePlayer(uuid).getPlayer();
 			String adr = target.getAddress().getAddress().getHostAddress();
 
 			return JoinCountryGetter.JoinCountry(adr);
 		}
 	}
 
-	public static String getJoinCountryCode(String uuid){
-		if (Bukkit.getPlayer(UUID.fromString(uuid)) != null){
-			if (checkFile(uuid)){
-				File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-				YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
-				return pfile.getString("JoinCCode");
+	public static String getJoinCountryCode(UUID uuid){
+		String data = PlayerDataAPI.getPlayerData(uuid, "JoinCCode");
+		if (Bukkit.getPlayer(uuid) != null){
+			if (data != null){
+				return data;
 			}
-			Player target = Bukkit.getPlayer(UUID.fromString(uuid));
+			Player target = Bukkit.getPlayer(uuid);
 			String adr = target.getAddress().getAddress().getHostAddress();
 
 			return JoinCountryGetter.JoinCountryCode(adr);
 		} else {
-			if (checkFile(uuid)){
-				File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
-				YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
-				return pfile.getString("JoinCCode");
+			if (data != null){
+				return data;
 			}
-			Player target = Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getPlayer();
+			Player target = Bukkit.getOfflinePlayer(uuid).getPlayer();
 			String adr = target.getAddress().getAddress().getHostAddress();
 
 			return JoinCountryGetter.JoinCountryCode(adr);

@@ -3,6 +3,7 @@ version: ${project.version}
 main: net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore
 author: fumyatan
 website: https://fumyatan.net
+depend: [PlayerDataAPI]
 softdepend: [Vault,PermissionsEx,Jail]
 
 
