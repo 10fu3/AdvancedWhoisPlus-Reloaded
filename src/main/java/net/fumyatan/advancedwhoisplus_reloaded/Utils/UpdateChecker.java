@@ -101,7 +101,9 @@ public class UpdateChecker implements Listener {
 				}
 			}
 		} else {
-			PrefixAdder.sendMessage(target, ChatColor.BLUE , "プラグインは最新です");
+			if (target.hasPermission("advwhois.updateinfo")){
+				PrefixAdder.sendMessage(target, ChatColor.BLUE , "プラグインは最新です");
+			}
 		}
 	}
 
@@ -154,7 +156,9 @@ public class UpdateChecker implements Listener {
 				}
 			}
 		} else {
-			PrefixAdder.sendMessage(target, ChatColor.BLUE , "プラグインは最新です");
+			if (target.hasPermission("advwhois.updateinfo")){
+				PrefixAdder.sendMessage(target, ChatColor.BLUE , "プラグインは最新です");
+			}
 		}
 	}
 
