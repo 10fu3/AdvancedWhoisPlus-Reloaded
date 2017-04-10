@@ -1,11 +1,12 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Listener;
 
+import static net.fumyatan.advancedwhoisplus_reloaded.ConfigManager.*;
+
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
 import net.fumyatan.advancedwhoisplus_reloaded.Utils.CountryGetManager;
 import net.fumyatan.advancedwhoisplus_reloaded.Utils.DuplicatePlayerChecker;
 import net.fumyatan.advancedwhoisplus_reloaded.Utils.UpdateChecker;
@@ -15,12 +16,9 @@ public class PlayerJoinEventListener implements Listener {
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent e){
 		String cCode = CountryGetManager.JoinCountryCode(e.getPlayer());
-		String JoinMs = AdvancedWhoisCore.plugin.getConfig().getString("JoinMassage");
 
 		if (cCode != null) {
-			JoinMs = JoinMs.replaceAll("%Player%", e.getPlayer().getName());
-			JoinMs = JoinMs.replaceAll("%JCountryC%", cCode);
-			String JoinMs_c = ChatColor.translateAlternateColorCodes('&', JoinMs);
+			String JoinMs_c = ChatColor.translateAlternateColorCodes('&', JoinMassage.replaceAll("%Player%", e.getPlayer().getName()).replaceAll("%JCountryC%", cCode));
 			e.setJoinMessage(JoinMs_c);
 		}
 		WhoisInfoSender.sendMinimalWhois(e.getPlayer());

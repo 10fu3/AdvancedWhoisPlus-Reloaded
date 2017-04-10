@@ -1,5 +1,7 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
+import static net.fumyatan.advancedwhoisplus_reloaded.ConfigManager.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,12 +11,9 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
-
 public class UUIDFetcher {
 
 	private static String getAPI(String pid) {
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
 		//APIからjsonを取得
 		URLConnection conn;
 		StringBuilder entirePage = new StringBuilder();
@@ -31,17 +30,15 @@ public class UUIDFetcher {
 			stream.close();
 			return new String(entirePage);
 		} catch (IOException | NullPointerException e) {
-			// TODO 自動生成された catch ブロック
-			if (debug == true){
+			if (debug){
 				e.printStackTrace();}
-			Bukkit.getLogger().info("Failed to connect to API.");
+			Bukkit.getLogger().info("APIとの通信に失敗しました.");
 		}
 		return null;
 
 	}
 
 	public static UUID getUUID(String pid) {
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
 		//jsonからUUIDを抜き出し
 		try{
 			String[] uuid_s = getAPI(pid).split(",", -1);
@@ -61,9 +58,9 @@ public class UUIDFetcher {
 			UUID uuid = UUID.fromString(suuid);
 			return uuid;
 		} catch (StringIndexOutOfBoundsException | IllegalArgumentException | ArrayIndexOutOfBoundsException | NullPointerException e){
-			if (debug == true){
+			if (debug){
 				e.printStackTrace();}
-			Bukkit.getLogger().warning("Failed to get UUID.");
+			Bukkit.getLogger().warning("UUIDの取得に失敗しました.");
 		}
 		return null;
 	}

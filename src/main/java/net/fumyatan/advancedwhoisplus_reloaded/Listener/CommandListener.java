@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
+import net.fumyatan.advancedwhoisplus_reloaded.ConfigManager;
 import net.fumyatan.advancedwhoisplus_reloaded.Tools.PrefixAdder;
 import net.fumyatan.advancedwhoisplus_reloaded.Utils.UpdateChecker;
 import net.fumyatan.advancedwhoisplus_reloaded.Utils.WhoisInfoSender;
@@ -24,10 +24,15 @@ public class CommandListener implements CommandExecutor {
 			PrefixAdder.sendMessage(sender, "/whoisps checkver: プラグインに更新がないか確認します");
 			PrefixAdder.sendMessage(sender, "/whoisps reload: Configをリロードします");
 		} else if (args[0].equals("checkver")){
-			UpdateChecker.VersionCheck(sender);
+			if (sender instanceof Player){
+				Player p = (Player) sender;
+				UpdateChecker.VersionCheck(p);
+			} else {
+				PrefixAdder.sendMessage(sender, ChatColor.RED, "このコマンドはゲーム内で実行する必要があります!");
+			}
 		} else if (args[0].equals("reload")){
 			if(sender.hasPermission("advwhois.reload")){
-				AdvancedWhoisCore.plugin.reloadConfig();
+				ConfigManager.loadConfig();
 				PrefixAdder.sendMessage(sender, ChatColor.GREEN, "Success!");
 			} else {
 				PrefixAdder.sendMessage(sender, ChatColor.RED, "You don't have Permission.");

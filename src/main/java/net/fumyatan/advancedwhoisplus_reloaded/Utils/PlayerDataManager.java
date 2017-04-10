@@ -1,5 +1,7 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
+import static net.fumyatan.advancedwhoisplus_reloaded.ConfigManager.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -7,8 +9,6 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
 
 public class PlayerDataManager {
 
@@ -41,7 +41,6 @@ public class PlayerDataManager {
 	}
 
 	public static boolean savePlayerData(String uuid){
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
 		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
 		YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
 
@@ -79,7 +78,6 @@ public class PlayerDataManager {
 	}
 
 	public static boolean savePlayerData(String adr_s, String uuid, Player target){
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
 		File data = new File("plugins/AdvancedWhoisPlus-Reloaded/PlayerData/" + uuid);
 		YamlConfiguration pfile = YamlConfiguration.loadConfiguration(data);
 

@@ -1,5 +1,7 @@
 package net.fumyatan.advancedwhoisplus_reloaded;
 
+import static net.fumyatan.advancedwhoisplus_reloaded.ConfigManager.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -32,7 +34,10 @@ public class AdvancedWhoisCore extends JavaPlugin {
 	public void onEnable(){
 		super .onEnable();
 		plugin = this;
-		if (getConfig().getBoolean("AdditionalWhoisInfo")){
+		saveDefaultConfig();
+		ConfigManager.loadConfig();
+
+		if (AdditionalWhoisInfo){
 			if (!(Bukkit.getPluginManager().getPlugin("Vault") == null)){
 				if (!setupEconomy()){
 					PrefixAdder.setLoggerWarn("経済Pluginとの連携に失敗しました");
@@ -40,8 +45,7 @@ public class AdvancedWhoisCore extends JavaPlugin {
 			}
 		}
 		getServer().getPluginManager().registerEvents(new PlayerJoinEventListener(), this);
-		getCommand("whoisps").setExecutor(new CommandListener());
-		saveDefaultConfig();
+		getCommand("advancedwhois").setExecutor(new CommandListener());
 	}
 
 	@Override

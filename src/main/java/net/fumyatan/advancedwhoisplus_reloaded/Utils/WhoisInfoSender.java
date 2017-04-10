@@ -1,5 +1,7 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
+import static net.fumyatan.advancedwhoisplus_reloaded.ConfigManager.*;
+
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
@@ -9,13 +11,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
 import net.fumyatan.advancedwhoisplus_reloaded.Tools.PrefixAdder;
 
 public class WhoisInfoSender {
 
 	public static void sendWhoisInfo(CommandSender sender, Player target, String s_target){
-
 		if (sender.hasPermission("advwhois.whoisps")){
 			if (target != null){
 				// 初回ログインを呼び出す
@@ -54,7 +54,7 @@ public class WhoisInfoSender {
 				sender.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + adr);
 				sender.sendMessage(ChatColor.GOLD + "ホストネーム: " + ChatColor.RESET + target.getAddress().getHostName());
 				sender.sendMessage(ChatColor.GOLD + "接続国名: " + ChatColor.RESET + CountryGetManager.JoinCountry(target) + " (" + CountryGetManager.JoinCountryCode(target) + ")");
-				if (AdvancedWhoisCore.plugin.getConfig().getBoolean("AdditionalWhoisInfo"))
+				if (AdditionalWhoisInfo)
 					AdditionalWhoisSender.sendAddWhois(sender, target);
 			} else {
 				UUID puuid = UUIDFetcher.getUUID(s_target);
@@ -86,18 +86,16 @@ public class WhoisInfoSender {
 	}
 
 	public static void sendMinimalWhois(Player target){
-		boolean EJoinM = AdvancedWhoisCore.plugin.getConfig().getBoolean("EnableJoinMassage");
-		int wmode = AdvancedWhoisCore.plugin.getConfig().getInt("SimplicityWhoisMode");
-		if (EJoinM){
+		if (EnableJoinMassage){
 			if (!target.hasPermission("advwhois.bypass")){
 				for(Player p : Bukkit.getServer().getOnlinePlayers()){
 					if (p.hasPermission("advwhois.joinshow")){
 						p.sendMessage("======== Whois Information ========");
 						p.sendMessage(ChatColor.GOLD + "名前: " + ChatColor.RESET + target.getName());
 						if (p.hasPermission("advancedwhoisplus.ipshow")){
-							if (wmode == 1 || wmode > 3){
+							if (SimplicityWhoisMode == 1 || SimplicityWhoisMode > 3){
 								p.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + target.getAddress().getAddress().getHostAddress());
-							} else if (wmode == 2){
+							} else if (SimplicityWhoisMode == 2){
 								p.sendMessage(ChatColor.GOLD + "HostName: " + ChatColor.RESET + target.getAddress().getHostName());
 							} else {
 								p.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + target.getAddress().getAddress().getHostAddress() + ChatColor.GRAY + " (" + target.getAddress().getHostName() + ")");

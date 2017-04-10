@@ -7,9 +7,10 @@ softdepend: [Vault,PermissionsEx,Jail]
 
 
 commands:
-   whoisps:
+   advancedwhois:
       description: ユーザー情報を表示します
       usage: /<command>
+      aliases: [whoisps, whois]
 
 permissions:
    advwhois.*:

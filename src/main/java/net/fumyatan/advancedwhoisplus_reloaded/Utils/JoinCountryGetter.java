@@ -1,12 +1,13 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
+import static net.fumyatan.advancedwhoisplus_reloaded.ConfigManager.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
 import net.fumyatan.advancedwhoisplus_reloaded.Tools.PrefixAdder;
 
 public class JoinCountryGetter {
@@ -31,7 +32,7 @@ public class JoinCountryGetter {
 		} catch (IOException | NullPointerException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			PrefixAdder.setLoggerWarn("Failed to connect to API.");
+			PrefixAdder.setLoggerWarn("APIとの通信に失敗しました.");
 
 		}
 		return null;
@@ -39,8 +40,6 @@ public class JoinCountryGetter {
 	}
 
 	public static String JoinCountry(String adr_s){
-
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
 		//接続国の抜き取り
 		try{
 		String[] cinfo_s = Countryinfo(adr_s).split(",", -1);
@@ -49,14 +48,13 @@ public class JoinCountryGetter {
 		} catch (StringIndexOutOfBoundsException se){
 			if (debug){
 			se.printStackTrace();}
-			PrefixAdder.setLoggerWarn("Failed to get the connection country information.");
+			PrefixAdder.setLoggerWarn("接続国情報の取得に失敗しました.");
 		}
 		return null;
 
 	}
 
 	public static String JoinCountryCode(String adr_s){
-		boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
 		try {
 			String[] cinfo_s = Countryinfo(adr_s).split(",", -1);
 			String cinfo_code = cinfo_s[1].substring(16,18);
@@ -64,7 +62,7 @@ public class JoinCountryGetter {
 		} catch (StringIndexOutOfBoundsException se){
 			if (debug){
 			se.printStackTrace();}
-			PrefixAdder.setLoggerWarn("Failed to get the connection country information.");
+			PrefixAdder.setLoggerWarn("接続国情報の取得に失敗しました.");
 		}
 		return null;
 
