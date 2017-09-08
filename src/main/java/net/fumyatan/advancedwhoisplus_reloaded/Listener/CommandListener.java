@@ -16,7 +16,6 @@ public class CommandListener implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		// TODO 自動生成されたメソッド・スタブ
 		if (args.length == 0){
 			sender.sendMessage("Unknown command. Type \"/whoisps help\" for help.");
 		} else if (args[0].equals("help")) {
@@ -24,19 +23,23 @@ public class CommandListener implements CommandExecutor {
 			PrefixAdder.sendMessage(sender, "/whoisps checkver: プラグインに更新がないか確認します");
 			PrefixAdder.sendMessage(sender, "/whoisps reload: Configをリロードします");
 		} else if (args[0].equals("checkver")){
-			UpdateChecker.VersionCheck(sender);
+			if (sender instanceof Player){
+				Player p = (Player) sender;
+				UpdateChecker.VersionCheck(p);
+			} else {
+				PrefixAdder.sendMessage(sender, ChatColor.RED, "このコマンドはゲーム内で実行する必要があります!");
+			}
 		} else if (args[0].equals("reload")){
 			if(sender.hasPermission("advwhois.reload")){
-				AdvancedWhoisCore.plugin.reloadConfig();
+				AdvancedWhoisCore.reloadConf();
 				PrefixAdder.sendMessage(sender, ChatColor.GREEN, "Success!");
 			} else {
 				PrefixAdder.sendMessage(sender, ChatColor.RED, "You don't have Permission.");
 			}
 		} else {
 			Player target = Bukkit.getPlayer(args[0]);
-			WhoisInfoSender.sendWhoisInfo(sender, target, args[0]);
+			WhoisInfoSender.sendWhoisInfo(sender, args[0]);
 		}
-
 		return true;
 	}
 

@@ -11,8 +11,18 @@ SimplicityWhoisMode: 1
 # %JCountryC%を任意の場所に入れることで接続国コードを入れることができます。
 JoinMassage: "&e%Player% has joined this server! - from %JCountryC%"
 
+# PlayerDataの保管にMySQLを使うかの設定です。
+UseMySQL: false
+# MySQLを使用する場合下記が使用されます。
+SQLAddress: localhost
+SQLPort: 3306
+SQLUser: Minecraft
+SQLPassword: PaSsWoRd
+SQLDatabase: PlayerDaya
+SQLTable: userdata
+
 debug: false
 
 # ここから下の行は編集しないでください
 ###################
-ConfigVersion: 6
+ConfigVersion: 7

@@ -1,99 +1,72 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
+import static net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.github.fcm_developers.playerdataapi.API.PlayerDataAPI;
-
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
+import net.fumyatan.advancedwhoisplus_reloaded.Sql.MySQLConnector;
+import net.fumyatan.advancedwhoisplus_reloaded.Sql.SQLConnector;
+import net.fumyatan.advancedwhoisplus_reloaded.Sql.SQLiteConnector;
 
 public class PlayerDataManager {
-	static boolean debug = AdvancedWhoisCore.plugin.getConfig().getBoolean("debug");
+
+	private static SQLConnector getSQL() {
+		if (UseMySQL) {
+			return new MySQLConnector();
+		} else {
+			return new SQLiteConnector();
+		}
+	}
+
+	public static String getIP(UUID uuid) {
+		SQLConnector sql = getSQL();
+		return sql.getPlayerData(uuid).get("ip");
+	}
 
 	public static boolean checkNewIP(UUID uuid){
 		if (Bukkit.getPlayer(uuid) != null){
 			String NowIP = Bukkit.getPlayer(uuid).getAddress().getAddress().getHostAddress();
-			String DataIP = PlayerDataAPI.getPlayerData(uuid, "IP");
-			return !NowIP.equals(DataIP);
+			return !NowIP.equals(getIP(uuid));
 		}
 		return false;
 	}
 
 	public static boolean checkNewIP(String adr_s, UUID uuid){
 		String NowIP = adr_s;
-		String DataIP = PlayerDataAPI.getPlayerData(uuid, "IP");
-		return !NowIP.equals(DataIP);
+		return !NowIP.equals(getIP(uuid));
 	}
 
-	public static boolean savePlayerData(UUID uuid){
-		Player target = Bukkit.getPlayer(uuid);
-		String IP = target.getAddress().getAddress().getHostAddress();
+	public static void updatePlayerData(Player p) {
+		SQLConnector sql = getSQL();
+		Map<String, String> data = new HashMap<>();
+		data.put("username", p.getName());
+		data.put("uuid", p.getUniqueId().toString());
+		data.put("ip", p.getAddress().getAddress().getHostAddress());
+		data.put("joincountry", JoinCountryGetter.JoinCountry(p.getAddress().getAddress().getHostAddress()));
+		data.put("joinccode", JoinCountryGetter.JoinCountryCode(p.getAddress().getAddress().getHostAddress()));
+		Map<String, String> old_data = sql.getPlayerData(p.getUniqueId());
 
-		// ユーザーデータの書き込み
-		PlayerDataAPI.savePlayerData(uuid, "Nick", target.getDisplayName());
-		PlayerDataAPI.savePlayerData(uuid, "UUID", uuid.toString());
-		PlayerDataAPI.savePlayerData(uuid, "IP", IP);
-		PlayerDataAPI.savePlayerData(uuid, "JoinCountry", JoinCountryGetter.JoinCountry(IP));
-		PlayerDataAPI.savePlayerData(uuid, "JoinCCode", JoinCountryGetter.JoinCountryCode(IP));
-
-		return false;
-	}
-
-	public static boolean savePlayerData(String adr_s, UUID uuid){
-		Player target = Bukkit.getPlayer(uuid);
-		String IP = adr_s;
-
-		// ユーザーデータの書き込み
-		PlayerDataAPI.savePlayerData(uuid, "Nick", target.getDisplayName());
-		PlayerDataAPI.savePlayerData(uuid, "UUID", uuid.toString());
-		PlayerDataAPI.savePlayerData(uuid, "IP", IP);
-		PlayerDataAPI.savePlayerData(uuid, "JoinCountry", JoinCountryGetter.JoinCountry(IP));
-		PlayerDataAPI.savePlayerData(uuid, "JoinCCode", JoinCountryGetter.JoinCountryCode(IP));
-
-		return false;
-	}
-
-	public static String getJoinCountry(UUID uuid){
-		String data = PlayerDataAPI.getPlayerData(uuid, "JoinCountry");
-		if (Bukkit.getPlayer(uuid) != null){
-			if (data != null){
-				return data;
+		if (!old_data.isEmpty()) {
+			if (checkNewIP(p.getUniqueId())) {
+				sql.updatePlayerData(p.getUniqueId(), data);
 			}
-			Player target = Bukkit.getPlayer(uuid);
-			String adr = target.getAddress().getAddress().getHostAddress();
-
-			return JoinCountryGetter.JoinCountry(adr);
 		} else {
-			if (data != null){
-				return data;
-			}
-			Player target = Bukkit.getOfflinePlayer(uuid).getPlayer();
-			String adr = target.getAddress().getAddress().getHostAddress();
-
-			return JoinCountryGetter.JoinCountry(adr);
+			sql.savePlayerData(p.getUniqueId(), data);
 		}
+	}
+
+	public static String getJoinCountry(UUID uuid) {
+		SQLConnector sql = getSQL();
+		return sql.getPlayerData(uuid).get("joincountry");
 	}
 
 	public static String getJoinCountryCode(UUID uuid){
-		String data = PlayerDataAPI.getPlayerData(uuid, "JoinCCode");
-		if (Bukkit.getPlayer(uuid) != null){
-			if (data != null){
-				return data;
-			}
-			Player target = Bukkit.getPlayer(uuid);
-			String adr = target.getAddress().getAddress().getHostAddress();
-
-			return JoinCountryGetter.JoinCountryCode(adr);
-		} else {
-			if (data != null){
-				return data;
-			}
-			Player target = Bukkit.getOfflinePlayer(uuid).getPlayer();
-			String adr = target.getAddress().getAddress().getHostAddress();
-
-			return JoinCountryGetter.JoinCountryCode(adr);
-		}
+		SQLConnector sql = getSQL();
+		return sql.getPlayerData(uuid).get("joinccode");
 	}
 }

@@ -1,5 +1,7 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
+import static net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore.*;
+
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
@@ -9,13 +11,12 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
 import net.fumyatan.advancedwhoisplus_reloaded.Tools.PrefixAdder;
 
 public class WhoisInfoSender {
 
-	public static void sendWhoisInfo(CommandSender sender, Player target, String s_target){
-
+	public static void sendWhoisInfo(CommandSender sender, String s_target){
+		Player target = Bukkit.getPlayer(s_target);
 		if (sender.hasPermission("advwhois.whoisps")){
 			if (target != null){
 				// 初回ログインを呼び出す
@@ -53,8 +54,8 @@ public class WhoisInfoSender {
 				sender.sendMessage(ChatColor.GOLD + "OP: " + ChatColor.RESET + target.isOp());
 				sender.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + adr);
 				sender.sendMessage(ChatColor.GOLD + "ホストネーム: " + ChatColor.RESET + target.getAddress().getHostName());
-				sender.sendMessage(ChatColor.GOLD + "接続国名: " + ChatColor.RESET + CountryGetManager.JoinCountry(target) + " (" + CountryGetManager.JoinCountryCode(target) + ")");
-				if (AdvancedWhoisCore.plugin.getConfig().getBoolean("AdditionalWhoisInfo"))
+				sender.sendMessage(ChatColor.GOLD + "接続国名: " + ChatColor.RESET + PlayerDataManager.getJoinCountry(target.getUniqueId()) + " (" + PlayerDataManager.getJoinCountryCode(target.getUniqueId()) + ")");
+				if (AdditionalWhoisInfo)
 					AdditionalWhoisSender.sendAddWhois(sender, target);
 			} else {
 				UUID puuid = UUIDFetcher.getUUID(s_target);
@@ -72,8 +73,9 @@ public class WhoisInfoSender {
 						sender.sendMessage(ChatColor.GOLD + "UUID: " + ChatColor.RESET + getofp.getUniqueId());
 						sender.sendMessage(ChatColor.GOLD + "最終ログイン: " + ChatColor.RESET + timelst);
 						sender.sendMessage(ChatColor.GOLD + "OP: " + ChatColor.RESET + getofp.isOp());
-					}
-					else {
+						sender.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + PlayerDataManager.getIP(getofp.getUniqueId()));
+						sender.sendMessage(ChatColor.GOLD + "接続国名: " + ChatColor.RESET + PlayerDataManager.getJoinCountryCode(getofp.getUniqueId()));
+					} else {
 						PrefixAdder.sendMessage(sender, ChatColor.RED , "プレイヤーはサーバーに参加したことがありません");
 					}
 				} else {
@@ -86,9 +88,8 @@ public class WhoisInfoSender {
 	}
 
 	public static void sendMinimalWhois(Player target){
-		boolean EJoinM = AdvancedWhoisCore.plugin.getConfig().getBoolean("EnableJoinMassage");
-		int wmode = AdvancedWhoisCore.plugin.getConfig().getInt("SimplicityWhoisMode");
-		if (EJoinM){
+		int wmode = SimplicityWhoisMode;
+		if (EnableJoinMassage){
 			if (!target.hasPermission("advwhois.bypass")){
 				for(Player p : Bukkit.getServer().getOnlinePlayers()){
 					if (p.hasPermission("advwhois.joinshow")){
@@ -103,12 +104,11 @@ public class WhoisInfoSender {
 								p.sendMessage(ChatColor.GOLD + "IP: " + ChatColor.RESET + target.getAddress().getAddress().getHostAddress() + ChatColor.GRAY + " (" + target.getAddress().getHostName() + ")");
 							}
 						}
-						p.sendMessage(ChatColor.GOLD + "接続国: " + ChatColor.RESET + CountryGetManager.JoinCountry(target) + " (" + CountryGetManager.JoinCountryCode(target) + ")");
+						p.sendMessage(ChatColor.GOLD + "接続国: " + ChatColor.RESET + PlayerDataManager.getJoinCountry(target.getUniqueId()) + " (" + PlayerDataManager.getJoinCountryCode(target.getUniqueId()) + ")");
 					}
 				}
 			}
 		}
-
 	}
 
 }

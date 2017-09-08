@@ -3,14 +3,13 @@ version: ${project.version}
 main: net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore
 author: fumyatan
 website: https://fumyatan.net
-depend: [PlayerDataAPI]
-softdepend: [Vault,PermissionsEx,Jail]
-
+softdepend: [Vault,PermissionsEx]
 
 commands:
-   whoisps:
+   advancedwhois:
       description: ユーザー情報を表示します
       usage: /<command>
+      aliases: [whois, whoisps]
 
 permissions:
    advwhois.*:

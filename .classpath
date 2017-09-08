@@ -33,7 +33,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/eclipse/Java/PermissionsEx-1.23.1.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse/Java/Jail.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse/workspace/PlayerDataAPI/target/PlayerDataAPI-0.0.7-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
