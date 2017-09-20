@@ -1,32 +1,28 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Utils;
 
-import org.bukkit.Bukkit;
+import static net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore.*;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
-
 public class AdditionalWhoisSender {
 
-	private static String getMoney(Player target){
-		if (AdvancedWhoisCore.useEcon){
-			double balamce = AdvancedWhoisCore.econ.getBalance(target.getPlayer());
-			return Double.toString(balamce);
+	public static String getMoney(Player target){
+		if (useEcon){
+			double balamce = econ.getBalance(target.getPlayer());
+			String suffix = econ.currencyNamePlural();
+			return Double.toString(balamce) + " " + suffix;
 		} else {
 			return null;
 		}
 	}
 
-	private static String getPrefix(Player target){
-		if (Bukkit.getPluginManager().getPlugin("PermissionsEx") == null){
+	public static String getPrefix(Player target){
+		if (!useChat){
 			return null;
 		} else {
-			PermissionUser user = PermissionsEx.getUser(target);
-			String prefix = user.getPrefix();
-			return prefix;
+			return chat.getPlayerPrefix(target);
 		}
 	}
 

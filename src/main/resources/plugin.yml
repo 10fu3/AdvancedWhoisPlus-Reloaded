@@ -3,7 +3,7 @@ version: ${project.version}
 main: net.fumyatan.advancedwhoisplus_reloaded.AdvancedWhoisCore
 author: fumyatan
 website: https://fumyatan.net
-softdepend: [Vault,PermissionsEx]
+softdepend: [Vault]
 
 commands:
    advancedwhois:
