@@ -28,7 +28,8 @@ AdminCmd等別管理プラグインを入れておりEssentialsが使えない�
 		# AdvancedWhoisPlus #
 
 		EnableJoinMassage: true
-		AdditionalWhoisInfo: true
+		AdditionalWhoisInfo: false
+		EnableTabPrefix: true
 
 		# プレイヤー接続時に表示される簡易Whoisのモード設定です。
 		# 1でIPが、2でHostNameが、3で両方表示されます。
@@ -38,12 +39,22 @@ AdminCmd等別管理プラグインを入れておりEssentialsが使えない�
 		# %JCountryC%を任意の場所に入れることで接続国コードを入れることができます。
 		JoinMassage: "&e%Player% has joined this server! - from %JCountryC%"
 
+		# PlayerDataの保管にMySQLを使うかの設定です。
+		UseMySQL: false
+		# MySQLを使用する場合下記が使用されます。
+		SQLAddress: localhost
+		SQLPort: 3306
+		SQLUser: Minecraft
+		SQLPassword: PaSsWoRd
+		SQLDatabase: PlayerDaya
+		SQLTable: userdata
+
 		debug: false
 
 		# ここから下の行は編集しないでください
 		###################
-		ConfigVersion: 6
+		ConfigVersion: 7
 
-##LICENSE
+## LICENSE
 		LICENSED BY GNU Lesser General Public License
 ![GNU License Logo](https://www.gnu.org/graphics/lgplv3-147x51.png)
