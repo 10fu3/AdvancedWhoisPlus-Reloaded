@@ -1,6 +1,5 @@
 package net.fumyatan.advancedwhoisplus_reloaded.Listener;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,7 +36,6 @@ public class CommandListener implements CommandExecutor {
 				PrefixAdder.sendMessage(sender, ChatColor.RED, "You don't have Permission.");
 			}
 		} else {
-			Player target = Bukkit.getPlayer(args[0]);
 			WhoisInfoSender.sendWhoisInfo(sender, args[0]);
 		}
 		return true;
