@@ -66,14 +66,12 @@ public class AdvancedWhoisCore extends JavaPlugin {
 		saveDefaultConfig();
 		reloadConf();
 
-		if (AdditionalWhoisInfo){
-			if (!(Bukkit.getPluginManager().getPlugin("Vault") == null)){
-				if (!setupChat()){
-					PrefixAdder.setLoggerWarn("権限管理プラグインとの連携に失敗しました");
-				}
-				if (!setupEconomy()){
-					PrefixAdder.setLoggerWarn("経済Pluginとの連携に失敗しました");
-				}
+		if (Bukkit.getPluginManager().getPlugin("Vault") != null){
+			if (!setupChat()){
+				PrefixAdder.setLoggerWarn("権限管理プラグインとの連携に失敗しました");
+			}
+			if (!setupEconomy()){
+				PrefixAdder.setLoggerWarn("経済Pluginとの連携に失敗しました");
 			}
 		}
 

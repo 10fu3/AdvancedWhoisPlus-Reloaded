@@ -17,9 +17,11 @@ public class TabUpdater implements Runnable {
 
 	public void run() {
 		for (Player target : Bukkit.getOnlinePlayers()){
-			String prefix = AdditionalWhoisSender.getPrefix(target) ;
+			String prefix = AdditionalWhoisSender.getPrefix(target);
 			String suffix = "";
 
+			if (prefix == null)
+				prefix = "";
 			if (AdvancedWhoisCore.cgmpx && AFKManager.isAFK(target)){
 				suffix = "&7[&9AFK&7]&f";
 			} else if (target.getAllowFlight()) {
